@@ -1,28 +1,35 @@
 import axios from 'axios';
-import { useState } from 'react';
 import { Formik } from 'formik';
 import {
   Button, Card, Col, Container, FloatingLabel, Form, Row,
 } from 'react-bootstrap';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 import { useAuthorization } from '../contexts/AuthorizatContext';
+import signupImage from '../assets/signup.png';
 import routes from '../routes';
-import loginImage from '../assets/login.png';
 
-const LoginSchema = Yup.object().shape({
-  username: Yup.string().required('loginPage.validation.required'),
-  password: Yup.string().required('loginPage.validation.required'),
+const SignupSchema = Yup.object().shape({
+  username: Yup.string()
+    .notOneOf([Yup.ref('busyName')], 'signupPage.validation.notUniqueUser')
+    .min(3, 'signupPage.validation.min3')
+    .max(20, 'signupPage.validation.max20')
+    .required('signupPage.validation.required'),
+  password: Yup.string()
+    .min(6, 'signupPage.validation.min6')
+    .required('signupPage.validation.required'),
+  passwordConfirmation: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'signupPage.validation.mustMatch')
+    .required('signupPage.validation.required'),
 });
 
-const LoginPage = () => {
+const SignupPage = () => {
   const { t } = useTranslation();
   const auth = useAuthorization();
   const navigate = useNavigate();
-  const [authFailed, setAuthFailed] = useState(false);
 
   return (
     <Container fluid className="h-100">
@@ -31,23 +38,28 @@ const LoginPage = () => {
           <Card className="text-center">
             <Card.Body className="row">
               <Col className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <img src={loginImage} alt="Login icon" />
+                <img src={signupImage} alt="Login icon" />
               </Col>
               <Col className="col-12 col-md-6">
                 <Formik
-                  initialValues={{ username: '', password: '' }}
-                  validationSchema={LoginSchema}
-                  onSubmit={async (values) => {
+                  initialValues={{
+                    username: '',
+                    password: '',
+                    passwordConfirmation: '',
+                    busyName: '',
+                  }}
+                  validationSchema={SignupSchema}
+                  onSubmit={async (values, { setFieldValue }) => {
                     try {
-                      await auth.signIn(values);
+                      await auth.signUp(values);
                       return navigate(routes.rootPage());
                     } catch (error) {
                       if (axios.isAxiosError(error)) {
                         const { code, response } = error;
-                        if (response?.status === 401) {
-                          return setAuthFailed(true);
+                        if (response?.status === 409) {
+                          return setFieldValue('busyName', values.username);
                         }
-                        return toast.error(t('loginPage.networkError', { code }));
+                        return toast.error(t('signupPage.networkError', { code }));
                       }
                       throw error;
                     }
@@ -63,19 +75,19 @@ const LoginPage = () => {
                     isSubmitting,
                   }) => (
                     <Form onSubmit={handleSubmit}>
-                      <h1 className="text-center mb-4">{t('loginPage.login')}</h1>
+                      <h1 className="text-center mb-4">{t('signupPage.signupCaption')}</h1>
                       <FloatingLabel
                         controlId="username"
-                        label={t('loginPage.username')}
+                        label={t('signupPage.username')}
                         className="mb-3 mt-3"
                       >
                         <Form.Control
                           type="text"
-                          placeholder={t('loginPage.username')}
+                          placeholder={t('signupPage.username')}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           value={values.username}
-                          isInvalid={(touched.username && errors.username) || authFailed}
+                          isInvalid={(touched.username && errors.username)}
                           disabled={isSubmitting}
                         />
                         {((errors.username && touched.username))
@@ -83,40 +95,51 @@ const LoginPage = () => {
                       </FloatingLabel>
                       <FloatingLabel
                         controlId="password"
-                        label={t('loginPage.password')}
+                        label={t('signupPage.password')}
                         className="mb-3 mt-3"
                       >
                         <Form.Control
                           type="password"
-                          placeholder={t('loginPage.password')}
+                          placeholder={t('signupPage.password')}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           value={values.password}
-                          isInvalid={(touched.password && errors.password) || authFailed}
+                          isInvalid={touched.password && errors.password}
                           disabled={isSubmitting}
                         />
-                        {((errors.password && touched.password))
+                        {errors.password && touched.password
                           && <Form.Control.Feedback type="invalid">{t(errors.password)}</Form.Control.Feedback>}
-                        <Form.Control.Feedback type="invalid">{authFailed ? t('loginPage.wrongCredentials') : ''}</Form.Control.Feedback>
+                      </FloatingLabel>
+                      <FloatingLabel
+                        controlId="passwordConfirmation"
+                        label={t('signupPage.passwordConfirmation')}
+                        className="mb-3 mt-3"
+                      >
+                        <Form.Control
+                          type="password"
+                          placeholder={t('signupPage.passwordConfirmation')}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.passwordConfirmation}
+                          isInvalid={touched.passwordConfirmation && errors.passwordConfirmation}
+                          disabled={isSubmitting}
+                        />
+                        {errors.passwordConfirmation && touched.passwordConfirmation
+                          && <Form.Control.Feedback type="invalid">{t(errors.passwordConfirmation)}</Form.Control.Feedback>}
                       </FloatingLabel>
                       <Button
                         variant="success"
                         as="button"
                         type="submit"
                         className="w-100 mb-3"
-                        disabled={isSubmitting}
                       >
-                        {t('loginPage.login')}
+                        {t('signupPage.signupButton')}
                       </Button>
                     </Form>
                   )}
                 </Formik>
               </Col>
             </Card.Body>
-            <Card.Footer className="text-muted p-4">
-              {t('loginPage.noAccountQuestion')}
-              <NavLink to={routes.signupPage()}>{t('loginPage.signup')}</NavLink>
-            </Card.Footer>
           </Card>
         </Col>
       </Row>
@@ -124,4 +147,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;

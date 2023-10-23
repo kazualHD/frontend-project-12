@@ -1,26 +1,29 @@
-
-import routes from '../routes';
 import axios from 'axios';
-import useStorage from './localStorage';
+import useLocalStorage from './localStorage';
+import routes from '../routes';
 
-const useAuthorization = () => {
-    const [user, setUser] = useStorage('user', null);
-    const logIn = async (data) => {
-      try {
-         const response = await axios.post(routes.apiLogin(), data)
-         const userData = response.data;
-         setUser(userData)
-         return userData;
-       
-    } catch(e) {
-     throw new Error(e)
-    }
-}
-  const logOut = () => {
-    setUser(null);
-  }
-    return  {logIn, user, setUser, logOut};
+const useAuth = () => {
+  const [user, setUser] = useLocalStorage('user', null);
 
-}
+  const signIn = async (data) => {
+    const response = await axios.post(routes.loginApiPath(), data);
+    const userData = response.data;
+    setUser(userData);
+    return userData;
+  };
 
-export default useAuthorization
+  const signUp = async (data) => {
+    const response = await axios.post(routes.signupApiPath(), data);
+    const userData = response.data;
+    setUser(userData);
+    return userData;
+  };
+
+  const signOut = () => setUser(null);
+
+  return {
+    user, signIn, signUp, signOut,
+  };
+};
+
+export default useAuth;

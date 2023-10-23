@@ -8,7 +8,8 @@ const channelsSlice = createSlice({
     name: 'channels',
     initialState: {
         ...channelsState,
-        currentChannelId: null
+        currentChannelId: null,
+        myChannel: null,
     },
     reducers: {
         updateChannels: channelsAdapter.setAll,
@@ -26,7 +27,12 @@ const channelsSlice = createSlice({
         setCurrentChannelId: (state, action) => {
             const id  = action.payload;
             state.currentChannelId = id;
+        },
+        setMyChannel: (state, action) => {
+            const myChannel = action.payload;
+            state.myChannel = myChannel;
         }
+    
     }
 });
 
