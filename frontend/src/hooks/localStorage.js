@@ -6,11 +6,12 @@ const getToken = (token, defaultValue = '') => {
 }
 
 const useStorage = (token, defaultValue = '') => {
-    const [key, setValue] = useState(() => 
-      getToken(token, defaultValue)
-    );
+  const [key, setValue] = useState(() => 
+    getToken(token, defaultValue)
+
+  );
     useEffect(() => 
-        localStorage.setItem(token, JSON.stringify(key)), [key, token]); 
+    localStorage.setItem(token, JSON.stringify(key)), [key, token]);
     return [key, setValue];
-}
+};
 export default useStorage;

@@ -2,16 +2,15 @@ import { useContext } from 'react';
 import { createContext } from 'react';
 import useAuth from '../hooks/login';
 
-
 const AuthorizationContext = createContext();
 const useAuthorization = () => useContext(AuthorizationContext);
 
-const AuthProvider = ({ children }) => {
+const AuthProvider = ({children}) => {
   const authorization = useAuth();
-      return (
+  return (
         <AuthorizationContext.Provider value={ authorization }>
           {children}
         </AuthorizationContext.Provider>
-    );
+  );
 };
 export { AuthProvider, useAuthorization };

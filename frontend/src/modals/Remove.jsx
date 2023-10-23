@@ -3,13 +3,13 @@ import {
   } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { useSocketApi} from '../contexts/SocketContext';
+import { useSocketApi } from '../contexts/SocketContext';
 
 const Remove = ({ modalInfo, hideModal }) => {
   const { t } = useTranslation();
   const api = useSocketApi();
   const { channel } = modalInfo;
-    return (
+  return (
       <Modal show centered onHide={hideModal}>
         <Modal.Header closeButton>
           <Modal.Title>{t('modals.remove.title')}</Modal.Title>
@@ -43,4 +43,4 @@ const Remove = ({ modalInfo, hideModal }) => {
     );
   };
   
-  export default Remove;
+export default Remove;
