@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import {actions} from '../slices/modals.js';
+import { actions } from '../slices/modals.js';
 import getModal from './index';
 
 const ModalDialog = () => {

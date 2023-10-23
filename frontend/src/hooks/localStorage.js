@@ -1,9 +1,8 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
-const getToken = (token, defaultValue ='') => {
-    const value = localStorage.getItem(token);
-
-    return JSON.parse(value) || defaultValue;
+const getToken = (token, defaultValue = '') => {
+  const value = localStorage.getItem(token);
+  return JSON.parse(value) || defaultValue;
 }
 
 const useStorage = (token, defaultValue = '') => {

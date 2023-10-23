@@ -1,14 +1,14 @@
 import {
     Modal, FormGroup, Button,
   } from 'react-bootstrap';
-  import { toast } from 'react-toastify';
-  import { useTranslation } from 'react-i18next';
-  import { useSocketApi} from '../contexts/SocketContext';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import { useSocketApi} from '../contexts/SocketContext';
 
-  const Remove = ({ modalInfo, hideModal }) => {
-    const { t } = useTranslation();
-    const api = useSocketApi();
-    const { channel } = modalInfo;
+const Remove = ({ modalInfo, hideModal }) => {
+  const { t } = useTranslation();
+  const api = useSocketApi();
+  const { channel } = modalInfo;
     return (
       <Modal show centered onHide={hideModal}>
         <Modal.Header closeButton>
