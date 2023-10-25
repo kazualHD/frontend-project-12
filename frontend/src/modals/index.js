@@ -11,4 +11,3 @@ const modals = {
 const getModalComponent = (modalName) => modals[modalName];
 
 export default getModalComponent;
-

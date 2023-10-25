@@ -8,12 +8,12 @@ const modalsSlice = createSlice({
   name: 'modals',
   initialState,
   reducers: {
-    setModalInfo(state, action) {
-      const modalInfo = action.payload;
-      state.modalInfo = modalInfo;
-    },
+    setModalInfo: (state, action) => ({
+      ...state,
+      modalInfo: action.payload,
+    }),
   },
 });
 
-export const {actions} = modalsSlice;
+export const { actions } = modalsSlice;
 export default modalsSlice.reducer;

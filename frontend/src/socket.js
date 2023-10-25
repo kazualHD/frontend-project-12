@@ -2,8 +2,7 @@ import io from 'socket.io-client';
 import { toast } from 'react-toastify';
 import store from './slices/index';
 import { actions as channelsActions } from './slices/channels.js';
-import {actions as messageActions} from './slices/messages.js';
-
+import { actions as messageActions } from './slices/messages.js';
 
 const { dispatch } = store;
 

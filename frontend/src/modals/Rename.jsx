@@ -1,4 +1,4 @@
-import  { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Formik } from 'formik';
 import {
   Modal, FormGroup, FormControl, Button, FloatingLabel,

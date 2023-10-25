@@ -7,6 +7,6 @@ export default configureStore({
   reducer: {
     channels: channelsReducer,
     messages: messagesReducer,
-    modals: modalsReducer
+    modals: modalsReducer,
   },
 });
