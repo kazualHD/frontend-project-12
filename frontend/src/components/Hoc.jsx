@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { useAuthorization } from '../contexts/AuthorizatContext'
+import { useAuthorization } from '../contexts/AuthorizatContext';
 import routes from '../routes';
 
 const RequireAuth = ({ children }) => {
