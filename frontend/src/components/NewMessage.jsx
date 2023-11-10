@@ -1,14 +1,16 @@
-import { useState, useRef, useEffect } from 'react';
+import {
+  useState, useRef, useEffect, useContext,
+} from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 import { useSocketApi } from '../contexts/SocketContext';
-import { useAuthorization } from '../contexts/AuthorizatContext';
+import { AuthorizationContext } from '../contexts/AuthorizatContext';
 
 const NewMessageForm = ({ channelId }) => {
   const { t } = useTranslation();
-  const { user: { username } } = useAuthorization();
+  const { user: { username } } = useContext(AuthorizationContext);
   const api = useSocketApi();
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);

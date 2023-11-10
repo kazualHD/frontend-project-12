@@ -9,19 +9,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import Channels from '../components/Channels';
 import Messages from '../components/Messages';
 import routes from '../routes';
-import { useAuthorization } from '../contexts/AuthorizatContext';
+import useAuth from '../hooks/useAuth';
 import { actions as channelActions } from '../slices/channels';
 import { actions as messagesActions } from '../slices/messages';
 
-const getAuthHeader = (user) => {
-  if (user && user.token) {
-    return { Authorization: `Bearer ${user.token}` };
-  }
-  return {};
-};
-
 const MainPage = () => {
-  const { user, logOut } = useAuthorization();
+  const { user, signOut, getAuthHeader } = useAuth();
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -39,7 +32,7 @@ const MainPage = () => {
       } catch (error) {
         const unauthorized = 401;
         if (error.name === 'AxiosError' && error.response.status === unauthorized) {
-          logOut();
+          signOut();
         }
         console.log(error);
         toast.error(t('mainPage.fetchDataError'));

@@ -1,11 +1,11 @@
 import { Navigate } from 'react-router-dom';
-import { useAuthorization } from '../contexts/AuthorizatContext';
+import useAuth from '../hooks/useAuth';
 import routes from '../routes';
 
 const RequireAuth = ({ children }) => {
-  const auth = useAuthorization();
+  const { user } = useAuth();
 
-  if (!auth.user) {
+  if (!user) {
     return <Navigate to={routes.loginPage()} />;
   }
 

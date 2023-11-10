@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
-import { useAuthorization } from '../contexts/AuthorizatContext';
+import useAuth from '../hooks/useAuth';
 import signupImage from '../assets/signup.png';
 import routes from '../routes';
 
@@ -28,7 +28,7 @@ const SignupSchema = Yup.object().shape({
 
 const SignupPage = () => {
   const { t } = useTranslation();
-  const auth = useAuthorization();
+  const auth = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -51,7 +51,8 @@ const SignupPage = () => {
                   validationSchema={SignupSchema}
                   onSubmit={async (values, { setFieldValue }) => {
                     try {
-                      await auth.signUp(values);
+                      await axios.post(routes.signupApiPath(), values);
+                      auth.signIn(values);
                       return navigate(routes.rootPage());
                     } catch (error) {
                       if (axios.isAxiosError(error)) {

@@ -8,9 +8,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-
-import { useAuthorization } from '../contexts/AuthorizatContext';
 import routes from '../routes';
+import useAuth from '../hooks/useAuth';
 import loginImage from '../assets/login.png';
 
 const LoginSchema = Yup.object().shape({
@@ -20,7 +19,7 @@ const LoginSchema = Yup.object().shape({
 
 const LoginPage = () => {
   const { t } = useTranslation();
-  const auth = useAuthorization();
+  const auth = useAuth();
   const navigate = useNavigate();
   const [authFailed, setAuthFailed] = useState(false);
 
@@ -39,7 +38,8 @@ const LoginPage = () => {
                   validationSchema={LoginSchema}
                   onSubmit={async (values) => {
                     try {
-                      await auth.signIn(values);
+                      const response = await axios.post(routes.loginApiPath(), values);
+                      await auth.signIn(response.data);
                       return navigate(routes.rootPage());
                     } catch (error) {
                       if (axios.isAxiosError(error)) {
