@@ -1,7 +1,7 @@
 // selectors/channels.js
 import { createSelector } from '@reduxjs/toolkit';
 
-const selectChannels = (state) => state.channels;
+export const selectChannels = (state) => state.channels.currentChannelId ?? 0;
 
 export const selectAllChannels = createSelector(
   [selectChannels],

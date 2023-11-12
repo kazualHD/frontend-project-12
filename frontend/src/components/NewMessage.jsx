@@ -4,7 +4,7 @@ import {
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-
+import { selectChannels } from '../selectors/channels';
 import { useSocketApi } from '../contexts/SocketContext';
 import { AuthorizationContext } from '../contexts/AuthorizatContext';
 
@@ -14,7 +14,7 @@ const NewMessageForm = ({ channelId }) => {
   const api = useSocketApi();
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId ?? 0);
+  const currentChannelId = useSelector(selectChannels);
   const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current.focus();
