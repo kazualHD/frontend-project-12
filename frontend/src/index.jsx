@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import initializeApp from './initializeApp.js';
-import App from './App';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import { initializeApp } from './appInitializer';
+import App from './App';
 
-(async () => {
-  const socket = await initializeApp();
+async function runApp() {
+  const { socket } = await initializeApp();
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
     <React.StrictMode>
       <App socket={socket} />
@@ -15,4 +17,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
   );
 
   reportWebVitals();
-})();
+}
+
+runApp();

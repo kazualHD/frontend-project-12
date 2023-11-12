@@ -7,7 +7,7 @@ const initializeApp = async () => {
   const socket = initSocket(i18next);
   initLeoProfanity();
 
-  return socket;
+  return { socket };
 };
 
 export default initializeApp;
