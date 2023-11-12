@@ -11,4 +11,11 @@ export const selectAllChannels = createSelector(
   },
 );
 
-export const sonst = 1 + 1;
+export const selectCurrentChannel = createSelector(
+  selectChannels,
+  (channels) => {
+    const [defaultId] = channels.ids;
+    const id = channels.currentChannelId ?? defaultId;
+    return channels.entities[id];
+  },
+);

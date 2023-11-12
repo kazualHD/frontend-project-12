@@ -4,20 +4,15 @@ import { Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Message from './Message';
 import NewMessageForm from './NewMessage';
+import { selectCurrentChannel } from '../selectors/channels';
+import selectMessagesForCurrentChannel from '../selectors/messages.js';
 
 const Messages = () => {
   const { t } = useTranslation();
 
-  const currentChannel = useSelector((state) => {
-    const [defaultId] = state.channels.ids;
-    const id = state.channels.currentChannelId ?? defaultId;
-    return state.channels.entities[id];
-  });
+  const currentChannel = useSelector(selectCurrentChannel);
 
-  const messages = useSelector((state) => {
-    const allMessages = state.messages.ids.map((id) => state.messages.entities[id]);
-    return allMessages.filter(({ channelId }) => channelId === currentChannel.id);
-  });
+  const messages = useSelector(selectMessagesForCurrentChannel);
 
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {

@@ -4,6 +4,7 @@ import { Button, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Channel from './Channel';
 import { actions } from '../slices/modals';
+import { selectAllChannels, selectCurrentChannel } from '../selectors/channels';
 import ModalDialog from '../modals/HideOpenedmodal';
 
 const Channels = () => {
@@ -14,15 +15,8 @@ const Channels = () => {
     dispatch(actions.setModalInfo({ type, channel }));
   };
 
-  const channels = useSelector((state) => {
-    const allChannels = state.channels.ids.map((id) => state.channels.entities[id]);
-    return allChannels;
-  });
-  const currentChannel = useSelector((state) => {
-    const [defaultId] = state.channels.ids;
-    const id = state.channels.currentChannelId ?? defaultId;
-    return state.channels.entities[id];
-  });
+  const channels = useSelector(selectAllChannels);
+  const currentChannel = useSelector(selectCurrentChannel);
 
   const currentChannelRef = useRef(null);
 
