@@ -8,12 +8,10 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { useSocketApi } from '../contexts/SocketContext';
+import { selectAllChannels } from '../selectors/channels';
 
 const Rename = ({ modalInfo, hideModal }) => {
-  const channels = useSelector((state) => {
-    const allChannels = state.channels.ids.map((id) => state.channels.entities[id]);
-    return allChannels;
-  });
+  const channels = useSelector(selectAllChannels);
   const { t } = useTranslation();
   const api = useSocketApi();
   const { channel } = modalInfo;

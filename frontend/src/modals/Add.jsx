@@ -7,15 +7,12 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-
+import { selectAllChannels } from '../selectors/channels.js';
 import { actions as channelsActions } from '../slices/channels';
 import { useSocketApi } from '../contexts/SocketContext';
 
 const Add = ({ hideModal }) => {
-  const channels = useSelector((state) => {
-    const allChannels = state.channels.ids.map((id) => state.channels.entities[id]);
-    return allChannels;
-  });
+  const channels = useSelector(selectAllChannels);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef(null);

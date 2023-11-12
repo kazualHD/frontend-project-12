@@ -1,10 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../slices/modals.js';
+import { selectModalInfo } from '../selectors/modals';
 import getModal from './index';
 
 const ModalDialog = () => {
   const dispatch = useDispatch();
-  const modalInfo = useSelector((state) => state.modals.modalInfo);
+  const modalInfo = useSelector(selectModalInfo);
   if (modalInfo.type === null) {
     return null;
   }
