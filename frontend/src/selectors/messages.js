@@ -1,10 +1,14 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { selectCurrentChannel } from './channels.js';
 
-const selectMessagesForCurrentChannel = (state) => {
-  const currentChannel = selectCurrentChannel(state);
-  const allMessages = state.messages.ids.map((id) => state.messages.entities[id]);
+const selectMessages = (state) => state.messages;
 
-  return allMessages.filter(({ channelId }) => channelId === currentChannel.id);
-};
+const selectMessagesForCurrentChannel = createSelector(
+  [selectCurrentChannel, selectMessages],
+  (currentChannel, messages) => {
+    const allMessages = messages.ids.map((id) => messages.entities[id]);
+    return allMessages.filter(({ channelId }) => channelId === currentChannel.id);
+  },
+);
 
 export default selectMessagesForCurrentChannel;
