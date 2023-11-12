@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 
-import { initializeApp } from './appInitializer';
+import initializeApp from './initializeApp.js';
 import App from './App';
 
 async function runApp() {
