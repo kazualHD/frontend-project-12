@@ -17,3 +17,5 @@ start:
 	make start-backend & make start-frontend
 publish:
 	npm publish --dry-run
+build:
+	cd frontend && npm run build
