@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <Navbar className="bg-white">
       <Container>
-        <Navbar.Brand as={Link} to={routes.rootPage()}>Hexlet Chat</Navbar.Brand>
+        <Navbar.Brand as={Link} to={routes.rootPage()}>{t('header.appName')}</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           {(user) ? <Button variant="outline-primary" onClick={() => signOut()}>{t('header.signOut')}</Button> : null}

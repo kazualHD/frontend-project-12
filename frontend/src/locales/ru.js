@@ -14,6 +14,7 @@ const locale = {
       channels: 'Каналы',
     },
     header: {
+      appName: 'Hexlet Chat',
       signOut: 'Выйти',
     },
     loginPage: {

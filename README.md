@@ -34,4 +34,8 @@ Prerequisite: Build the application using the `npm run build` command in the pro
 1. Start the application using the `npm run start` command in the project's root directory (backend).
 2. Open the application in your browser at http://localhost:5001.
 
+#### DEPLOY 
+
+https://vercel.com/new/success?developer-id=&external-id=&redirect-url=&branch=main&deploymentUrl=chat-slack-90pmh2vr6-kazualhd.vercel.app&projectName=chat-slack&s=https%3A%2F%2Fgithub.com%2FkazualHD%2Ffrontend-project-12&gitOrgLimit=&hasTrialAvailable=1&totalProjects=1
+
 
