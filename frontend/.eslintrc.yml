@@ -16,9 +16,7 @@ parserOptions:
 
 plugins:
   - react
-  - react-hooks
-  - jest
-
+  - functional
 rules:
   import/extensions: 0
   import/no-unresolved: 0
