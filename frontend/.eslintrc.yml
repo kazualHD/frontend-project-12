@@ -17,7 +17,6 @@ parserOptions:
 
 plugins:
   - react
-  - functional
   - react-hooks
   - jest
 
